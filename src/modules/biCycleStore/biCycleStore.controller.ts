@@ -23,4 +23,31 @@ const createBicycleController = async (req: Request, res: Response) => {
     }
 };
 
-export const BiCycleStoreController = { createBicycleController };
+
+const getAllBicyclesController = async (req: Request, res: Response) => {
+    try {
+        const { searchTerm } = req.query;
+        let bicycles;
+
+        if (searchTerm) {
+            bicycles = await BiCycleStoreService.searchBicycles(searchTerm as string);
+        } else {
+            bicycles = await BiCycleStoreService.getAllBicycles();
+        }
+
+        res.status(200).json({
+            message: "Bicycles retrieved successfully",
+            status: true,
+            data: bicycles,
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Something went wrong',
+            error: error,
+            stack: error.stack,
+        });
+    }
+};
+
+export const BiCycleStoreController = { createBicycleController, getAllBicyclesController };
