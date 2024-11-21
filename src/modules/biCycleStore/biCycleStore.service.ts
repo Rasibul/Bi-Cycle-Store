@@ -32,7 +32,13 @@ const getBicycleById = async (productId: string) => {
 };
 
 
+const updateBicycle = async (productId: string, updatedData: Partial<BiCycleStore>) => {
+    const updatedBicycle = await BiCycleStoreModel.findByIdAndUpdate(productId, updatedData, { new: true });
+    return updatedBicycle;
+};
 
 
 
-export const BiCycleStoreService = { createBicycle, getAllBicycles, searchBicycles, getBicycleById };
+
+
+export const BiCycleStoreService = { createBicycle, getAllBicycles, searchBicycles, getBicycleById, updateBicycle };
