@@ -50,4 +50,31 @@ const getAllBicyclesController = async (req: Request, res: Response) => {
     }
 };
 
-export const BiCycleStoreController = { createBicycleController, getAllBicyclesController };
+const getBicycleByIdController = async (req: Request, res: Response) => {
+    try {
+        const { productId } = req.params;
+        const bicycle = await BiCycleStoreService.getBicycleById(productId);
+
+        if (!bicycle) {
+            return res.status(404).json({
+                message: "Bicycle not found",
+                status: false,
+            });
+        }
+
+        res.status(200).json({
+            message: "Bicycle retrieved successfully",
+            status: true,
+            data: bicycle,
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message || 'Something went wrong',
+            error: error,
+            stack: error.stack,
+        });
+    }
+};
+
+export const BiCycleStoreController = { createBicycleController, getAllBicyclesController, getBicycleByIdController };

@@ -26,4 +26,13 @@ const searchBicycles = async (searchTerm: string) => {
 };
 
 
-export const BiCycleStoreService = { createBicycle, getAllBicycles, searchBicycles };
+const getBicycleById = async (productId: string) => {
+    const bicycle = await BiCycleStoreModel.findById(productId);
+    return bicycle;
+};
+
+
+
+
+
+export const BiCycleStoreService = { createBicycle, getAllBicycles, searchBicycles, getBicycleById };
