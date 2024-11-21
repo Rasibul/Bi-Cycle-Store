@@ -1,3 +1,6 @@
+
+// Defining a TypeScript type named `BiCycleStore`
+// This type describes the structure of a bicycle store's data
 export type BiCycleStore = {
     name: string;
     brand: string;

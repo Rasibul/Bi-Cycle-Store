@@ -38,7 +38,14 @@ const updateBicycle = async (productId: string, updatedData: Partial<BiCycleStor
 };
 
 
+const deleteBicycle = async (productId: string) => {
+    const deletedBicycle = await BiCycleStoreModel.findByIdAndDelete(productId);
+    return deletedBicycle;
+};
 
 
 
-export const BiCycleStoreService = { createBicycle, getAllBicycles, searchBicycles, getBicycleById, updateBicycle };
+
+
+
+export const BiCycleStoreService = { createBicycle, getAllBicycles, searchBicycles, getBicycleById, updateBicycle, deleteBicycle };
