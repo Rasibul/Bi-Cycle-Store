@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { BiCycleStoreModel } from '../biCycleStore/biCycleStore.model';
 import { OrderService } from './order.service';
@@ -41,6 +42,7 @@ const createOrderController = async (req: Request, res: Response) => {
       quantity,
       totalPrice,
     });
+    // Send a success response with the created order data
     return res.status(201).json({
       message: 'Order created successfully',
       status: true,
@@ -51,9 +53,12 @@ const createOrderController = async (req: Request, res: Response) => {
   }
 };
 
+// calculateRevenue
 const calculateRevenueController = async (req: Request, res: Response) => {
   try {
+    // Call the service method
     const result = await OrderService.calculateRevenue();
+    // Send a success response
     const totalRevenue = result.length ? result[0].totalRevenue : 0;
     return res.status(200).json({
       message: 'Revenue calculated successfully',
@@ -70,6 +75,7 @@ const calculateRevenueController = async (req: Request, res: Response) => {
   }
 };
 
+// Exporting the controllers
 export const OrderController = {
   createOrderController,
   calculateRevenueController,

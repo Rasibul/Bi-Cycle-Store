@@ -1,9 +1,12 @@
 import { model, Schema } from 'mongoose';
 import { Order } from './order.interface';
 
+// Define the schema for the 'Order' collection
 const orderSchema = new Schema<Order>(
   {
     email: { type: String, required: true },
+
+    // Reference to the 'BiCycleStore' collection
     product: {
       type: Schema.Types.ObjectId,
       ref: 'BiCycleStore',
@@ -15,4 +18,5 @@ const orderSchema = new Schema<Order>(
   { timestamps: true },
 );
 
+// Export the model
 export const OrderModel = model('Order', orderSchema);
