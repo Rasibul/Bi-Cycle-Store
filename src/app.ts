@@ -8,6 +8,12 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
+
+// Root route for the backend
+app.get('/', (req, res) => {
+    res.send('Welcome to the Bi-Cycle Store API!');
+});
+
 // routes for biCycleStore
 app.use('/api/products', BiCycleStoreRoutes);
 
