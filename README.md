@@ -43,3 +43,43 @@ Before you begin, ensure you have the following installed:
 ```bash
 git clone https://github.com/your-username/bicycle-store-backend.git
 cd bicycle-store-backend
+
+### 2️⃣ Install Dependencies  
+
+Install the required dependencies using npm or yarn:  
+
+```bash
+npm install  
+# or  
+yarn install
+
+
+### 3️⃣ Configure Environment Variables
+
+Create a `.env` file in the root directory and add the following variables:
+
+```env
+PORT=5000
+MONGO_URI=your-mongodb-connection-string
+JWT_SECRET=your-secret-key
+
+### 4️⃣ Run the Application
+
+Start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+
+The application will run locally at http://localhost:5000
+
+📜 Available Scripts
+npm run dev: Start the development server with live reload.
+npm run build: Compile the TypeScript code for production.
+npm start: Run the compiled production build.
+npm run lint: Check code quality with ESLint.
+npm run format: Format code using Prettier.
+
+
+
