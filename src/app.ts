@@ -1,5 +1,5 @@
 import cors from 'cors';
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
 import { BiCycleStoreRoutes } from './modules/biCycleStore/biCycleStore.routes';
 const app: Application = express();
 
@@ -7,12 +7,11 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
+
+// routes for biCycleStore
 app.use('/api/products', BiCycleStoreRoutes);
 
-app.get('/', (req: Request, res: Response) => {
-  const a = 10;
 
-  res.send(a);
-});
+
 
 export default app;

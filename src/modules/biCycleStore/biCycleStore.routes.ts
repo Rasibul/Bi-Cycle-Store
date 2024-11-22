@@ -1,9 +1,7 @@
 import express from 'express';
 import { BiCycleStoreController } from './biCycleStore.controller';
 
-
 const router = express.Router();
-
 
 // Route to create a new bicycle in the store
 // Calls the `createBicycleController` method in the BiCycleStoreController
@@ -27,6 +25,5 @@ router.put('/:productId', BiCycleStoreController.updateBicycleController);
 // The `:productId` is a dynamic route parameter representing the bicycle's unique ID
 // Calls the `deleteBicycleController` method in the BiCycleStoreController
 router.delete('/:productId', BiCycleStoreController.deleteBicycleController);
-
 
 export const BiCycleStoreRoutes = router;
