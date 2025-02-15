@@ -1,7 +1,6 @@
 import cors from 'cors';
 import express, { Application } from 'express';
-import { BiCycleStoreRoutes } from './app/modules/biCycleStore/biCycleStore.routes';
-import { OrderRoutes } from './app/modules/order/order.routes';
+import router from './app/routes';
 const app: Application = express();
 
 // parser
@@ -14,10 +13,10 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Bi-Cycle Store API!');
 });
 
-// routes for biCycleStore
-app.use('/api/products', BiCycleStoreRoutes);
 
-// routes for orders
-app.use('/api/orders', OrderRoutes);
+// application routes
+app.use('/api', router);
+
+
 
 export default app;
