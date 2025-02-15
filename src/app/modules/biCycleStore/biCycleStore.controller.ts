@@ -1,31 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { BiCycleStoreService } from './biCycleStore.service';
+import catchAsync from '../../utilitis/catchAsync';
+import sendResponse from '../../utilitis/sendResponse';
+import httpStatus from "http-status";
 
-// createBicycleController
-const createBicycleController = async (req: Request, res: Response) => {
-  try {
-    // Access the bicycle data from the request body
-    const bicycle = req.body;
-    //  Call the service method to create a new bicycle in the database
-    const createdBicycle = await BiCycleStoreService.createBicycle(bicycle);
 
-    // Send a success response with the created bicycle data
-    res.status(201).json({
-      message: 'Bicycle created successfully',
-      success: true,
-      data: createdBicycle,
-    });
-  } catch (error: any) {
-    // Structure error response
-    res.status(400).json({
-      success: false,
-      message: error.message || 'something went wrong',
-      error: error,
-      stack: error.stack, // Include stack trace for debugging
-    });
-  }
-};
+
+const createBicycleController = catchAsync(async (req: Request, res: Response) => {
+  const bicycle = req.body;
+  const createdBicycle = await BiCycleStoreService.createBicycle(bicycle);
+  sendResponse(res, {
+
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: 'Bicycle created successfully',
+    data: createdBicycle,
+  });
+});
 
 // getAllBicyclesController
 const getAllBicyclesController = async (req: Request, res: Response) => {
