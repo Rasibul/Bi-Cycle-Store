@@ -35,99 +35,80 @@ const getAllBicyclesController = catchAsync(async (req: Request, res: Response) 
   });
 });
 
-// getBicycleByIdController
-const getBicycleByIdController = async (req: Request, res: Response) => {
-  try {
-    // Access the bicycle data from the request body
-    const { productId } = req.params;
-    const bicycle = await BiCycleStoreService.getBicycleById(productId);
 
-    if (!bicycle) {
-      return res.status(404).json({
-        message: 'Bicycle not found',
-        status: false,
-      });
-    }
-    // Send a success response with the created bicycle data
-    res.status(200).json({
-      message: 'Bicycle retrieved successfully',
-      status: true,
-      data: bicycle,
-    });
-  } catch (error: any) {
-    // Structure error response
-    res.status(500).json({
-      success: false,
-      message: error.message || 'Something went wrong',
-      error: error,
-      stack: error.stack,
-    });
-  }
-};
+
+const getBicycleByIdController = catchAsync(async (req: Request, res: Response) => {
+  const { productId } = req.params;
+  const bicycle = await BiCycleStoreService.getBicycleById(productId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Bicycle retrieved successfully',
+    data: bicycle,
+  });
+});
 
 // updateBicycleController
-const updateBicycleController = async (req: Request, res: Response) => {
-  try {
-    // Access the bicycle data from the request body
-    const { productId } = req.params;
-    const updatedData = req.body;
-    const updatedBicycle = await BiCycleStoreService.updateBicycle(
-      productId,
-      updatedData,
-    );
+// const updateBicycleController = async (req: Request, res: Response) => {
+//   try {
+//     // Access the bicycle data from the request body
+//     const { productId } = req.params;
+//     const updatedData = req.body;
+//     const updatedBicycle = await BiCycleStoreService.updateBicycle(
+//       productId,
+//       updatedData,
+//     );
 
-    if (!updatedBicycle) {
-      return res.status(404).json({
-        message: 'Bicycle not found',
-        status: false,
-      });
-    }
-    // Send a success response with the created bicycle data
-    res.status(200).json({
-      message: 'Bicycle updated successfully',
-      status: true,
-      data: updatedBicycle,
-    });
-  } catch (error: any) {
-    // Structure error response
-    res.status(500).json({
-      success: false,
-      message: error.message || 'Something went wrong',
-      error: error,
-      stack: error.stack,
-    });
-  }
-};
+//     if (!updatedBicycle) {
+//       return res.status(404).json({
+//         message: 'Bicycle not found',
+//         status: false,
+//       });
+//     }
+//     // Send a success response with the created bicycle data
+//     res.status(200).json({
+//       message: 'Bicycle updated successfully',
+//       status: true,
+//       data: updatedBicycle,
+//     });
+//   } catch (error: any) {
+//     // Structure error response
+//     res.status(500).json({
+//       success: false,
+//       message: error.message || 'Something went wrong',
+//       error: error,
+//       stack: error.stack,
+//     });
+//   }
+// };
 
-// deleteBicycleController
-const deleteBicycleController = async (req: Request, res: Response) => {
-  try {
-    // Access the bicycle data from the request body
-    const { productId } = req.params;
-    const deletedBicycle = await BiCycleStoreService.deleteBicycle(productId);
+const updateBicycleController = catchAsync(async (req: Request, res: Response) => {
+  const { productId } = req.params;
+  const updatedData = req.body;
+  const updatedBicycle = await BiCycleStoreService.updateBicycle(
+    productId,
+    updatedData,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Bicycle updated successfully',
+    data: updatedBicycle,
+  });
+});
 
-    if (!deletedBicycle) {
-      return res.status(404).json({
-        message: 'Bicycle not found',
-        status: false,
-      });
-    }
-    // Send a success response with the created bicycle data
-    res.status(200).json({
-      message: 'Bicycle deleted successfully',
-      status: true,
-      data: {},
-    });
-  } catch (error: any) {
-    // Structure error response
-    res.status(500).json({
-      success: false,
-      message: error.message || 'Something went wrong',
-      error: error,
-      stack: error.stack,
-    });
-  }
-};
+
+
+const deleteBicycleController = catchAsync(async (req: Request, res: Response) => {
+  const { productId } = req.params;
+  const deletedBicycle = await BiCycleStoreService.deleteBicycle(productId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Bicycle deleted successfully',
+    data: deletedBicycle,
+  });
+});
 
 // Exporting the controllers
 export const BiCycleStoreController = {
