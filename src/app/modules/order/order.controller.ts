@@ -9,10 +9,14 @@ import httpStatus from "http-status";
 
 
 const createOrderController = catchAsync(async (req: Request, res: Response) => {
-  const { email, product, quantity, totalPrice } = req.body;
+  const { user, product, quantity, totalPrice, status } = req.body;
+
+  // Start a transaction
+
+
 
   // Fetch the bicycle by ID
-  const bicycle: any = await BiCycleStoreModel.findById(product);
+  const bicycle = await BiCycleStoreModel.findById(product);
   if (!bicycle) {
     return sendResponse(res, {
       statusCode: 404,
@@ -24,6 +28,7 @@ const createOrderController = catchAsync(async (req: Request, res: Response) => 
 
   // Check if the bicycle is in stock and has sufficient quantity
   if (!bicycle.inStock || bicycle.quantity < quantity) {
+
     return sendResponse(res, {
       statusCode: 400,
       success: false,
@@ -34,8 +39,6 @@ const createOrderController = catchAsync(async (req: Request, res: Response) => 
 
   // Deduct the requested quantity
   bicycle.quantity -= quantity;
-
-  // Update inStock field if quantity reaches 0
   if (bicycle.quantity === 0) {
     bicycle.inStock = false;
   }
@@ -44,12 +47,17 @@ const createOrderController = catchAsync(async (req: Request, res: Response) => 
   await bicycle.save();
 
   // Create the order
-  const newOrder = await OrderService.createOrder({
-    email,
-    product,
-    quantity,
-    totalPrice,
-  });
+  const newOrder = await OrderService.createOrder(
+    {
+      user,
+      product,
+      quantity,
+      totalPrice,
+      status,
+    },
+  );
+
+
 
   // Send success response
   sendResponse(res, {
@@ -58,26 +66,54 @@ const createOrderController = catchAsync(async (req: Request, res: Response) => 
     message: 'Order created successfully',
     data: newOrder,
   });
+
 });
 
 
 
-const calculateRevenueController = catchAsync(async (req: Request, res: Response) => {
-  const result = await OrderService.calculateRevenue();
-  const totalRevenue = result.length ? result[0].totalRevenue : 0;
+
+const getOrdersByUserController = catchAsync(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+
+  // Fetch orders from service
+  const orders = await OrderService.getOrdersByUser(userId);
+
+  if (!orders.length) {
+    return sendResponse(res, {
+      statusCode: 404,
+      success: false,
+      message: 'No orders found for this user',
+      data: [],
+    });
+  }
+
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: 200,
     success: true,
-    message: 'Revenue calculated successfully',
-    data: {
-      totalRevenue,
-    },
+    message: 'Orders retrieved successfully',
+    data: orders,
   });
 });
+
+
+
+// const calculateRevenueController = catchAsync(async (req: Request, res: Response) => {
+//   const result = await OrderService.calculateRevenue();
+//   const totalRevenue = result.length ? result[0].totalRevenue : 0;
+//   sendResponse(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: 'Revenue calculated successfully',
+//     data: {
+//       totalRevenue,
+//     },
+//   });
+// });
 
 
 // Exporting the controllers
 export const OrderController = {
   createOrderController,
-  calculateRevenueController,
+  // calculateRevenueController,
+  getOrdersByUserController
 };

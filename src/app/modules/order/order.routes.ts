@@ -6,8 +6,11 @@ const router = Router();
 // Create an order
 router.post('/', OrderController.createOrderController);
 
+
+router.get('/:userId', OrderController.getOrdersByUserController);
+
 // Calculate revenue
-router.get('/revenue', OrderController.calculateRevenueController);
+// router.get('/revenue', OrderController.calculateRevenueController);
 
 // Exporting the routes
 export const OrderRoutes = router;
