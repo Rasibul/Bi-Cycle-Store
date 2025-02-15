@@ -19,34 +19,21 @@ const createBicycleController = catchAsync(async (req: Request, res: Response) =
   });
 });
 
-// getAllBicyclesController
-const getAllBicyclesController = async (req: Request, res: Response) => {
-  try {
-    // Access the bicycle data from the request body
-    const { searchTerm } = req.query;
-    let bicycles;
-    // Call the service method to create a new bicycle in the database
-    if (searchTerm) {
-      bicycles = await BiCycleStoreService.searchBicycles(searchTerm as string);
-    } else {
-      bicycles = await BiCycleStoreService.getAllBicycles();
-    }
-    // Send a success response with the created bicycle data
-    res.status(200).json({
-      message: 'Bicycles retrieved successfully',
-      status: true,
-      data: bicycles,
-    });
-  } catch (error: any) {
-    // Structure error response
-    res.status(500).json({
-      success: false,
-      message: error.message || 'Something went wrong',
-      error: error,
-      stack: error.stack,
-    });
+const getAllBicyclesController = catchAsync(async (req: Request, res: Response) => {
+  const { searchTerm } = req.query;
+  let bicycles;
+  if (searchTerm) {
+    bicycles = await BiCycleStoreService.searchBicycles(searchTerm as string);
+  } else {
+    bicycles = await BiCycleStoreService.getAllBicycles();
   }
-};
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'All Bicycles retrieved successfully',
+    data: bicycles,
+  });
+});
 
 // getBicycleByIdController
 const getBicycleByIdController = async (req: Request, res: Response) => {
