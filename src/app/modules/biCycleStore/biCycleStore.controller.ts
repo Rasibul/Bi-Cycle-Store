@@ -48,39 +48,7 @@ const getBicycleByIdController = catchAsync(async (req: Request, res: Response) 
   });
 });
 
-// updateBicycleController
-// const updateBicycleController = async (req: Request, res: Response) => {
-//   try {
-//     // Access the bicycle data from the request body
-//     const { productId } = req.params;
-//     const updatedData = req.body;
-//     const updatedBicycle = await BiCycleStoreService.updateBicycle(
-//       productId,
-//       updatedData,
-//     );
 
-//     if (!updatedBicycle) {
-//       return res.status(404).json({
-//         message: 'Bicycle not found',
-//         status: false,
-//       });
-//     }
-//     // Send a success response with the created bicycle data
-//     res.status(200).json({
-//       message: 'Bicycle updated successfully',
-//       status: true,
-//       data: updatedBicycle,
-//     });
-//   } catch (error: any) {
-//     // Structure error response
-//     res.status(500).json({
-//       success: false,
-//       message: error.message || 'Something went wrong',
-//       error: error,
-//       stack: error.stack,
-//     });
-//   }
-// };
 
 const updateBicycleController = catchAsync(async (req: Request, res: Response) => {
   const { productId } = req.params;
