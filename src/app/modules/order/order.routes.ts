@@ -1,13 +1,15 @@
 import { Router } from 'express';
 import { OrderController } from './order.controller';
+import authenticateUser from '../../middlewares/authenticate';
+import { authMiddlewares } from '../../middlewares/isAdmin';
 
 const router = Router();
 
 // Create an order
-router.post('/', OrderController.createOrderController);
+router.post('/', authenticateUser, authMiddlewares.isCustomer, OrderController.createOrderController);
 
 
-router.get('/:userId', OrderController.getOrdersByUserController);
+router.get('/:userId', authenticateUser, authMiddlewares.isCustomer, OrderController.getOrdersByUserController);
 
 // Calculate revenue
 // router.get('/revenue', OrderController.calculateRevenueController);

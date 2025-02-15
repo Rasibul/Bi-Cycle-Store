@@ -1,7 +1,10 @@
 import express from 'express';
 import { BiCycleStoreController } from './biCycleStore.controller';
 import authenticateUser from '../../middlewares/authenticate';
-import isAdmin from '../../middlewares/isAdmin';
+import { authMiddlewares } from '../../middlewares/isAdmin';
+
+
+
 
 const router = express.Router();
 
@@ -26,6 +29,6 @@ router.put('/:productId', authenticateUser, BiCycleStoreController.updateBicycle
 // Route to delete a specific bicycle by its ID
 // The `:productId` is a dynamic route parameter representing the bicycle's unique ID
 // Calls the `deleteBicycleController` method in the BiCycleStoreController
-router.delete('/:productId', authenticateUser, isAdmin, BiCycleStoreController.deleteBicycleController);
+router.delete('/:productId', authenticateUser, authMiddlewares.isAdmin, BiCycleStoreController.deleteBicycleController);
 
 export const BiCycleStoreRoutes = router;

@@ -10,5 +10,17 @@ const isAdmin = catchAsync(async (req, res, next) => {
 
     next();
 })
+const isCustomer = catchAsync(async (req, res, next) => {
+    const user = req.user;
 
-export default isAdmin;
+    if (user.role !== 'customer') {
+        throw new AppError(httpStatus.FORBIDDEN, 'Access restricted to admins');
+    }
+
+    next();
+})
+
+export const authMiddlewares = {
+    isAdmin,
+    isCustomer
+}
