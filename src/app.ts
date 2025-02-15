@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express, { Application } from 'express';
-import { BiCycleStoreRoutes } from './modules/biCycleStore/biCycleStore.routes';
-import { OrderRoutes } from './modules/order/order.routes';
+import { BiCycleStoreRoutes } from './app/modules/biCycleStore/biCycleStore.routes';
+import { OrderRoutes } from './app/modules/order/order.routes';
 const app: Application = express();
 
 // parser
