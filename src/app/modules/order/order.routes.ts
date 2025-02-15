@@ -12,6 +12,8 @@ router.post('/', authenticateUser, isCustomer, OrderController.createOrderContro
 
 router.get('/:userId', authenticateUser, isCustomer, OrderController.getOrdersByUserController);
 
+router.delete('/:id', authenticateUser, isCustomer, OrderController.deleteOrderByUserController);
+
 // Calculate revenue
 // router.get('/revenue', OrderController.calculateRevenueController);
 

@@ -97,6 +97,23 @@ const getOrdersByUserController = catchAsync(async (req: Request, res: Response)
 
 
 
+
+
+
+const deleteOrderByUserController = catchAsync(async (req: Request, res: Response) => {
+  const { id: orderId } = req.params;
+  const userId = req.user.id;
+  await OrderService.deleteOrderByUser(orderId, userId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Order deleted successfully',
+    data: null,
+  });
+});
+
+
 // const calculateRevenueController = catchAsync(async (req: Request, res: Response) => {
 //   const result = await OrderService.calculateRevenue();
 //   const totalRevenue = result.length ? result[0].totalRevenue : 0;
@@ -115,5 +132,6 @@ const getOrdersByUserController = catchAsync(async (req: Request, res: Response)
 export const OrderController = {
   createOrderController,
   // calculateRevenueController,
-  getOrdersByUserController
+  getOrdersByUserController,
+  deleteOrderByUserController
 };

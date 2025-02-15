@@ -58,6 +58,32 @@ const getOrdersByUser = async (userId: string) => {
   return orders;
 };
 
+
+const deleteOrderByUser = async (orderId: string, userId: string) => {
+  // Validate ObjectId
+  if (!mongoose.Types.ObjectId.isValid(orderId)) {
+    throw new Error('Invalid order ID');
+  }
+
+  // Find the order and ensure it belongs to the user
+  const order = await OrderModel.findOne({ _id: orderId, user: userId });
+
+  if (!order) {
+    throw new Error('Order not found or unauthorized access');
+  }
+
+  // Delete the order
+  await OrderModel.findByIdAndDelete(orderId);
+
+  return { message: 'Order deleted successfully' };
+};
+
+
+
+
+
+
+
 // const calculateRevenue = async () => {
 //   // Calculate total revenue
 //   const result = await OrderModel.aggregate([
@@ -85,5 +111,6 @@ const getOrdersByUser = async (userId: string) => {
 export const OrderService = {
   createOrder,
   // calculateRevenue,
-  getOrdersByUser
+  getOrdersByUser,
+  deleteOrderByUser
 };
