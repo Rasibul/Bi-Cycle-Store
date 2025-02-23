@@ -5,6 +5,7 @@ export type BiCycleStore = {
   brand: string;
   price: number;
   type: string;
+  photo: string;
   description: string;
   quantity: number;
   inStock: boolean;

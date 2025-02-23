@@ -15,7 +15,7 @@ router.post('/', authenticateUser, BiCycleStoreController.createBicycleControlle
 
 // Route to get a list of all bicycles in the store
 // Calls the `getAllBicyclesController` method in the BiCycleStoreController
-router.get('/', authenticateUser, BiCycleStoreController.getAllBicyclesController);
+router.get('/', BiCycleStoreController.getAllBicyclesController);
 
 // Route to get details of a specific bicycle by its ID
 // The `:productId` is a dynamic route parameter representing the bicycle's unique ID

@@ -28,7 +28,7 @@ const biCycleStoreSchema = new Schema<BiCycleStore>(
 
     // 'quantity' field: a required number indicating how many bikes of this type are available
     // Validation to ensure the quantity is not negative
-
+    photo: { type: String, required: true },
     quantity: {
       type: Number,
       required: true,
