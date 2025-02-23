@@ -20,7 +20,7 @@ router.get('/', BiCycleStoreController.getAllBicyclesController);
 // Route to get details of a specific bicycle by its ID
 // The `:productId` is a dynamic route parameter representing the bicycle's unique ID
 // Calls the `getBicycleByIdController` method in the BiCycleStoreController
-router.get('/:productId', authenticateUser, BiCycleStoreController.getBicycleByIdController);
+router.get('/:productId', BiCycleStoreController.getBicycleByIdController);
 
 // Route to update a specific bicycle's details by its ID
 // The `:productId` is a dynamic route parameter representing the bicycle's unique ID
