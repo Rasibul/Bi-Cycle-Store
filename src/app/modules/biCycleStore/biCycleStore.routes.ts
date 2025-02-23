@@ -11,7 +11,7 @@ const router = express.Router();
 
 // Route to create a new bicycle in the store
 // Calls the `createBicycleController` method in the BiCycleStoreController
-router.post('/', authenticateUser, BiCycleStoreController.createBicycleController);
+router.post('/', BiCycleStoreController.createBicycleController);
 
 // Route to get a list of all bicycles in the store
 // Calls the `getAllBicyclesController` method in the BiCycleStoreController

@@ -19,21 +19,45 @@ const createBicycleController = catchAsync(async (req: Request, res: Response) =
   });
 });
 
+
+
 const getAllBicyclesController = catchAsync(async (req: Request, res: Response) => {
-  const { searchTerm } = req.query;
-  let bicycles;
-  if (searchTerm) {
-    bicycles = await BiCycleStoreService.searchBicycles(searchTerm as string);
-  } else {
-    bicycles = await BiCycleStoreService.getAllBicycles();
+  const { searchTerm, minPrice, maxPrice, category, availability, brand, page = 1, limit = 10 } = req.query;
+
+  // Build filters object
+  const filters: any = {};
+
+  // Apply price filter correctly
+  if (minPrice && maxPrice) {
+    filters.price = { $gte: parseFloat(minPrice as string), $lte: parseFloat(maxPrice as string) };
   }
+  if (category) {
+    filters.type = category as string; // Make sure your category field in MongoDB is "type"
+  }
+  if (availability !== undefined) {
+    filters.availability = availability === 'true'; // Convert to boolean
+  }
+  if (brand) {
+    filters.brand = brand as string;
+  }
+
+  // Call the service method
+  const result = await BiCycleStoreService.searchBicycles(
+    searchTerm as string,
+    filters,
+    { page: parseInt(page as string), limit: parseInt(limit as string) }
+  );
+
+  // Send response
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'All Bicycles retrieved successfully',
-    data: bicycles,
+    message: 'Bicycles retrieved successfully',
+    data: result,
   });
 });
+
+
 
 
 

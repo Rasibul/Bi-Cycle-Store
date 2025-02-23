@@ -10,3 +10,14 @@ export type BiCycleStore = {
   quantity: number;
   inStock: boolean;
 };
+export interface SearchFilters {
+  priceRange?: { min: number; max: number };
+  category?: string;
+  availability?: boolean;
+  brand?: string;
+}
+
+export interface PaginationOptions {
+  page: number;
+  limit: number;
+}
