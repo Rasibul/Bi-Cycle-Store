@@ -11,6 +11,6 @@ router.post('/register', userController.registerUser);
 // User Login
 router.post('/login', userController.loginUser);
 
-
+router.get('/:id', userController.getSingleUser);
 
 export const userRoutes = router;

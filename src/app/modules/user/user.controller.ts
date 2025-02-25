@@ -44,9 +44,19 @@ const loginUser = catchAsync(async (req, res) => {
         data: { token },
     })
 })
-
+const getSingleUser = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const user = await userService.findUserById(id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'User retrieved successfully',
+        data: user,
+    });
+});
 
 export const userController = {
     registerUser,
-    loginUser
+    loginUser,
+    getSingleUser
 };
