@@ -13,4 +13,6 @@ router.post('/login', userController.loginUser);
 
 router.get('/:id', userController.getSingleUser);
 
+router.get('/', userController.getAllUsers);
+
 export const userRoutes = router;

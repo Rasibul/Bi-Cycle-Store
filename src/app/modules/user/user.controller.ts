@@ -55,8 +55,19 @@ const getSingleUser = catchAsync(async (req, res) => {
     });
 });
 
+const getAllUsers = catchAsync(async (req, res) => {
+    const users = await userService.getAllUsers();
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Users retrieved successfully',
+        data: users,
+    });
+});
+
 export const userController = {
     registerUser,
     loginUser,
-    getSingleUser
+    getSingleUser,
+    getAllUsers,
 };

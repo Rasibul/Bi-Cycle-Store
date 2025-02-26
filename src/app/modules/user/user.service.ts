@@ -23,12 +23,16 @@ const blockUser = async (id: string) => {
     return await userModel.findByIdAndUpdate(id, { isBlocked: true }, { new: true });
 };
 
+const getAllUsers = async () => {
+    return await userModel.find();
+}
 
 export const userService = {
     createUser,
     findUserByEmail,
     findUserById,
     updateUser,
-    blockUser
+    blockUser,
+    getAllUsers,
 
 };
