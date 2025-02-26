@@ -1,6 +1,7 @@
+import AppError from "../../errors/AppError";
 import { TUser } from "./user.interface";
 import { userModel } from "./user.model";
-
+import httpStatus from 'http-status';
 
 const createUser = async (userData: Partial<TUser>) => {
     return await userModel.create(userData);
@@ -20,7 +21,13 @@ const updateUser = async (id: string, updateData: Partial<TUser>) => {
 };
 
 const blockUser = async (id: string) => {
-    return await userModel.findByIdAndUpdate(id, { isBlocked: true }, { new: true });
+    const user = await userModel.findById(id);
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+    }
+    user.isBlocked = !user.isBlocked;
+    await user.save();
+    return user;
 };
 
 const getAllUsers = async () => {

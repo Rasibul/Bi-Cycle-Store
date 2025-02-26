@@ -15,4 +15,6 @@ router.get('/:id', userController.getSingleUser);
 
 router.get('/', userController.getAllUsers);
 
+router.put('/block/:id', userController.blockUser);
+
 export const userRoutes = router;

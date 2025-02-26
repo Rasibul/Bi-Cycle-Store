@@ -65,9 +65,24 @@ const getAllUsers = catchAsync(async (req, res) => {
     });
 });
 
+const blockUser = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const user = await userService.blockUser(id);
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+    }
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: user.isBlocked ? 'User blocked successfully' : 'User unblocked successfully',
+        data: user,
+    });
+});
+
 export const userController = {
     registerUser,
     loginUser,
     getSingleUser,
     getAllUsers,
+    blockUser,
 };
