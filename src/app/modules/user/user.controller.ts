@@ -79,10 +79,59 @@ const blockUser = catchAsync(async (req, res) => {
     });
 });
 
+const changePassword = catchAsync(async (req, res) => {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    const userId = req.user?._id; // Assuming the user is attached to the request by the auth middleware
+
+    // Check if new password and confirm password match
+    if (newPassword !== confirmPassword) {
+        return sendResponse(res, {
+            statusCode: httpStatus.BAD_REQUEST,
+            success: false,
+            message: 'New password and confirm password do not match',
+            data: null,
+        });
+    }
+
+    // Fetch the user from the database
+    const user = await userService.findUserById(userId);
+    if (!user) {
+        return sendResponse(res, {
+            statusCode: httpStatus.NOT_FOUND,
+            success: false,
+            message: 'User not found',
+            data: null,
+        });
+    }
+
+    // Compare the current password with the stored hashed password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+        return sendResponse(res, {
+            statusCode: httpStatus.UNAUTHORIZED,
+            success: false,
+            message: 'Current password is incorrect',
+            data: null,
+        });
+    }
+
+    // Hash the new password and update it in the database
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await userService.updateUserPassword(userId, hashedPassword);
+
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Password updated successfully',
+        data: null,
+    });
+});
+
 export const userController = {
     registerUser,
     loginUser,
     getSingleUser,
     getAllUsers,
     blockUser,
+    changePassword
 };

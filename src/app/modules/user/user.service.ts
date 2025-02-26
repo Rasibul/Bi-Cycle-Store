@@ -34,6 +34,10 @@ const getAllUsers = async () => {
     return await userModel.find();
 }
 
+const updateUserPassword = async (userId: string, newPassword: string) => {
+    return await userModel.findByIdAndUpdate(userId, { password: newPassword }, { new: true });
+};
+
 export const userService = {
     createUser,
     findUserByEmail,
@@ -41,5 +45,6 @@ export const userService = {
     updateUser,
     blockUser,
     getAllUsers,
+    updateUserPassword
 
 };
