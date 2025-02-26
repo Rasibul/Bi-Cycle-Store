@@ -75,10 +75,10 @@ const getBicycleByIdController = catchAsync(async (req: Request, res: Response) 
 
 
 const updateBicycleController = catchAsync(async (req: Request, res: Response) => {
-  const { productId } = req.params;
+  const { id } = req.params;
   const updatedData = req.body;
   const updatedBicycle = await BiCycleStoreService.updateBicycle(
-    productId,
+    id,
     updatedData,
   );
   sendResponse(res, {

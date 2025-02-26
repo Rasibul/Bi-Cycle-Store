@@ -56,11 +56,11 @@ const getBicycleById = async (productId: string) => {
 
 // Create a service method to update a bicycle by its ID
 const updateBicycle = async (
-  productId: string,
+  id: string,
   updatedData: Partial<BiCycleStore>,
 ) => {
   const updatedBicycle = await BiCycleStoreModel.findByIdAndUpdate(
-    productId,
+    id,
     updatedData,
     { new: true },
   );

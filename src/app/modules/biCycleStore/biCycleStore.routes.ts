@@ -25,7 +25,7 @@ router.get('/:productId', BiCycleStoreController.getBicycleByIdController);
 // Route to update a specific bicycle's details by its ID
 // The `:productId` is a dynamic route parameter representing the bicycle's unique ID
 // Calls the `updateBicycleController` method in the BiCycleStoreController
-router.put('/:productId', authenticateUser, BiCycleStoreController.updateBicycleController);
+router.put('/:id', authenticateUser, BiCycleStoreController.updateBicycleController);
 
 // Route to delete a specific bicycle by its ID
 // The `:productId` is a dynamic route parameter representing the bicycle's unique ID
