@@ -81,9 +81,17 @@ const blockUser = catchAsync(async (req, res) => {
 
 const changePassword = catchAsync(async (req, res) => {
     const { currentPassword, newPassword, confirmPassword } = req.body;
-    const userId = req.user?._id; // Assuming the user is attached to the request by the auth middleware
+    const userId = req.user?._id; // Ensure the user is attached to the request
 
-    // Check if new password and confirm password match
+    if (!userId) {
+        return sendResponse(res, {
+            statusCode: httpStatus.UNAUTHORIZED,
+            success: false,
+            message: 'User not authenticated',
+            data: null,
+        });
+    }
+
     if (newPassword !== confirmPassword) {
         return sendResponse(res, {
             statusCode: httpStatus.BAD_REQUEST,
@@ -93,7 +101,6 @@ const changePassword = catchAsync(async (req, res) => {
         });
     }
 
-    // Fetch the user from the database
     const user = await userService.findUserById(userId);
     if (!user) {
         return sendResponse(res, {
@@ -104,7 +111,6 @@ const changePassword = catchAsync(async (req, res) => {
         });
     }
 
-    // Compare the current password with the stored hashed password
     const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) {
         return sendResponse(res, {
@@ -115,7 +121,6 @@ const changePassword = catchAsync(async (req, res) => {
         });
     }
 
-    // Hash the new password and update it in the database
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await userService.updateUserPassword(userId, hashedPassword);
 

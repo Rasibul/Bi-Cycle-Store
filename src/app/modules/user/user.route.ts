@@ -1,6 +1,7 @@
 import express from 'express';
 import { userController } from './user.controller';
-import authenticateUser from '../../middlewares/authenticate';
+import { authenticateUser } from '../../middlewares/authenticate';
+
 
 
 

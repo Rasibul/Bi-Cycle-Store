@@ -1,7 +1,8 @@
 import express from 'express';
 import { BiCycleStoreController } from './biCycleStore.controller';
-import authenticateUser from '../../middlewares/authenticate';
+
 import isAdmin from '../../middlewares/isAdmin';
+import { authenticateUser } from '../../middlewares/authenticate';
 
 
 
